@@ -1,0 +1,13 @@
+./rtl/ram.sv
+./tb/ram_agent.sv
+./tb/ram_coverage.sv
+./tb/ram_driver.sv
+./tb/ram_env.sv
+./tb/ram_interface.sv
+./tb/ram_monitor.sv
+./tb/ram_scoreboard.sv
+./tb/ram_seq_item.sv
+./tb/ram_sequence.sv
+./tb/ram_test.sv
+./tb/tb_ram.sv
+./tb/uvm_component.sv

@@ -7,26 +7,26 @@
 > A robust UVM-based verification suite for a Universal Asynchronous Receiver/Transmitter (UART) IP, featuring internal loopback testing, asynchronous timing validation via Baud Rate Generation, and detailed Functional Coverage analysis.
 
 ##  Project Overview
-[cite_start]This project validates a full-duplex UART module designed for 100MHz system clocks and 9600 Baud rate communication[cite: 185, 191]. [cite_start]The verification environment employs a **Loopback Configuration** (`assign u_if.rx = u_if.tx`) to verify that serialized data transmitted by the TX module is accurately reconstructed by the RX module without frame errors or data corruption[cite: 298].
+This project validates a full-duplex UART module designed for 100MHz system clocks and 9600 Baud rate communication. The verification environment employs a **Loopback Configuration** (`assign u_if.rx = u_if.tx`) to verify that serialized data transmitted by the TX module is accurately reconstructed by the RX module without frame errors or data corruption.
 
 ##  Code Implementation Details
 
 ### 1. RTL Design Analysis
-- [cite_start]**Baud Rate Generator (`baud_rate_gen.sv`)**: Divides the 100MHz system clock to generate a precise `tick` signal for oversampling (16x Baud Rate), ensuring stable data sampling in the middle of the bit period[cite: 185, 186].
-- [cite_start]**UART TX/RX FSMs**: Both modules utilize Finite State Machines (FSMs) with `IDLE`, `START`, `DATA`, and `STOP` states[cite: 195, 220]. 
-    - [cite_start]**TX**: Converts 8-bit parallel `tx_data` into a serial bitstream[cite: 230].
-    - [cite_start]**RX**: Features a synchronization stage (`rx_q1`, `rx_q2`) to prevent metastability and uses oversampling to detect the `START` bit edge accurately[cite: 197, 203].
+- **Baud Rate Generator (`baud_rate_gen.sv`)**: Divides the 100MHz system clock to generate a precise `tick` signal for oversampling (16x Baud Rate), ensuring stable data sampling in the middle of the bit period.
+- **UART TX/RX FSMs**: Both modules utilize Finite State Machines (FSMs) with `IDLE`, `START`, `DATA`, and `STOP` states.
+    - **TX**: Converts 8-bit parallel `tx_data` into a serial bitstream.
+    - **RX**: Features a synchronization stage (`rx_q1`, `rx_q2`) to prevent metastability and uses oversampling to detect the `START` bit edge accurately.
 
 ### 2. UVM Verification Features
-- [cite_start]**Loopback Scoreboarding (`uart_scoreboard.sv`)**: The scoreboard captures the original `tx_data` from the Driver/Monitor and compares it against the `rx_data` sampled by the Monitor upon `rx_valid` assertion[cite: 262, 278]. [cite_start]It tracks successful matches and reports any bit-level mismatches[cite: 267].
-- [cite_start]**Functional Coverage (`uart_coverage.sv`)**: A specialized `covergroup` is implemented to ensure the stimulus exercises critical data patterns[cite: 254]:
+- **Loopback Scoreboarding (`uart_scoreboard.sv`)**: The scoreboard captures the original `tx_data` from the Driver/Monitor and compares it against the `rx_data` sampled by the Monitor upon `rx_valid` assertion. It tracks successful matches and reports any bit-level mismatches.
+- **Functional Coverage (`uart_coverage.sv`)**: A specialized `covergroup` is implemented to ensure the stimulus exercises critical data patterns:
     - **Corner Cases**: `zero` (8'h00), `max` (8'hFF).
-    - [cite_start]**Pattern Checks**: Alternating bits (`alt_01`: 8'h55, `alt_10`: 8'hAA) and single-bit triggers (`lsb_only`, `msb_only`)[cite: 255].
-    - [cite_start]**Range Analysis**: Validates distribution across `low`, `med`, and `high` data ranges[cite: 256].
-- [cite_start]**Reactive Driver (`uart_driver.sv`)**: The driver monitors the `tx_busy` signal, ensuring transactions are only driven when the hardware is ready to accept new data, thus respecting the hardware backpressure[cite: 283, 284].
+    - **Pattern Checks**: Alternating bits (`alt_01`: 8'h55, `alt_10`: 8'hAA) and single-bit triggers (`lsb_only`, `msb_only`).
+    - **Range Analysis**: Validates distribution across `low`, `med`, and `high` data ranges.
+- **Reactive Driver (`uart_driver.sv`)**: The driver monitors the `tx_busy` signal, ensuring transactions are only driven when the hardware is ready to accept new data, thus respecting the hardware backpressure.
 
 ##  How to Run (Linux / Synopsys VCS)
-[cite_start]The simulation is fully automated via the provided `Makefile`, which includes coverage collection and VCS-specific optimizations[cite: 301].
+The simulation is fully automated via the provided `Makefile`, which includes coverage collection and VCS-specific optimizations.
 
 ```bash
 # 1. Compile and run the UART random test
@@ -43,7 +43,7 @@ make clean
 ```
 
 ##  Expected Output Log
-The scoreboard will print a summary of the data matches. [cite_start]The log also shows the functional coverage percentage achieved during the run[cite: 260, 267].
+The scoreboard will print a summary of the data matches. The log also shows the functional coverage percentage achieved during the run.
 
 ```text
 UVM_INFO @ 0: reporter [RNTST] Running test uart_rand_test...

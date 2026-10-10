@@ -7,7 +7,7 @@
 > The flagship project of the suite: A complete UVM verification environment for a 32-bit RAM module controlled via the industry-standard **AMBA APB Protocol**, featuring multi-phase protocol driving and cross-coverage analysis.
 
 ##  Project Overview
-[cite_start]This project validates a 64-depth, 32-bit RAM module integrated with an AMBA APB Slave interface[cite: 297, 299]. [cite_start]The primary objective is to verify strict adherence to the APB protocol's state transitions (IDLE → SETUP → ACCESS) while ensuring 100% data integrity during random and corner-case memory operations[cite: 358, 393].
+This project validates a 64-depth, 32-bit RAM module integrated with an AMBA APB Slave interface[cite: 297, 299]. [cite_start]The primary objective is to verify strict adherence to the APB protocol's state transitions (IDLE → SETUP → ACCESS) while ensuring 100% data integrity during random and corner-case memory operations[cite: 358, 393].
 
 
 ##  Code Implementation Details
